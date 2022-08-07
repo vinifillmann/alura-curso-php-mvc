@@ -2,21 +2,14 @@
 
 namespace Alura\Cursos\Entity;
 
-/**
- * @Entity
- * @Table(name="cursos")
- */
+use Doctrine\ORM\Mapping\{Entity, Table, Column, Id, GeneratedValue};
+
+#[Entity, Table("cursos")]
 class Curso
 {
-    /**
-     * @Id
-     * @GeneratedValue
-     * @Column(type="integer")
-     */
+    #[Id, GeneratedValue, Column(type: "integer")]
     private $id;
-    /**
-     * @Column(type="string")
-     */
+    #[Column(type: "string")]
     private $descricao;
 
     public function getId(): int

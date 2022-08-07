@@ -18,7 +18,7 @@ class EntityManagerCreator
             'path' => __DIR__ . '/../../db.sqlite'
         );
 
-        $config = Setup::createAnnotationMetadataConfiguration(
+        $config = Setup::createAttributeMetadataConfiguration(
             $paths,
             $isDevMode
         );
