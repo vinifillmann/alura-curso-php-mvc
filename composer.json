@@ -12,6 +12,9 @@
         "git-update": [
             "git add .",
             "git commit -m \"Avançando no curso\""
+        ],
+        "git-push": [
+            "git push origin master"
         ]
     }
     
