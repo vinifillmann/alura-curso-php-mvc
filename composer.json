@@ -7,5 +7,12 @@
     "require": {
         "doctrine/orm": "^2.6",
         "symfony/cache": "^6.1"
+    },
+    "scripts": {
+        "git-update": [
+            "git add .",
+            "git commit -m \"Avançando no curso\""
+        ]
     }
+    
 }
