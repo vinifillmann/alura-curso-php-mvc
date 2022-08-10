@@ -9,7 +9,7 @@ $rotas = require __DIR__ . "/../config/routes.php";
 
 if (!array_key_exists($caminho, $rotas)) {
     if (trim($caminho) === "") {
-        header("Location: /listar-cursos");
+        header("Location: /login");
     } else {
         http_response_code(404);
     }

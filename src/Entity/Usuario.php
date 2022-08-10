@@ -1,5 +1,5 @@
 <?php
-namespace Alura\Armazenamento\Entity;
+namespace Alura\Cursos\Entity;
 
 use Doctrine\ORM\Mapping\{Entity, Table, Column, Id, GeneratedValue};
 
