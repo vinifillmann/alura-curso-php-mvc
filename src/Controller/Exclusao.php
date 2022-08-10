@@ -6,7 +6,7 @@ use Alura\Cursos\Entity\Curso;
 use Alura\Cursos\Infra\EntityManagerCreator;
 use Doctrine\ORM\EntityManagerInterface;
 
-class Persistencia implements InterfaceController
+class Exclusao implements InterfaceController
 {
     private EntityManagerInterface $entityManager;
 
@@ -17,19 +17,16 @@ class Persistencia implements InterfaceController
 
     public function processaRequisicao(): void
     {
-        $descricao = trim(filter_input(INPUT_POST, "descricao", FILTER_SANITIZE_STRING));
-        $curso = new Curso();
-        $curso->setDescricao($descricao);
-
         $id = filter_input(INPUT_GET, "id", FILTER_VALIDATE_INT);
 
-        if ($id !== NULL && $id !== false) {
-            $curso->setId($id);
-            $this->entityManager->merge($curso);
-        } else {
-            $this->entityManager->persist($curso);
+        if ($id === false || $id === NULL) {
+            header("Location: /");
+            return;
         }
+
+        $curso = $this->entityManager->getReference(Curso::class, $id);
+        $this->entityManager->remove($curso);
         $this->entityManager->flush();
-        header("Location: /", true, 302);
+        header("Location: /");
     }
 }
