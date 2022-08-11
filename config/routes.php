@@ -1,6 +1,6 @@
 <?php
 
-use Alura\Cursos\Controller\{Exclusao, FormularioEdicao, ListarCursos, FormularioInsercao, FormularioLogin, Persistencia, RealizarLogin};
+use Alura\Cursos\Controller\{Deslogar, Exclusao, FormularioEdicao, ListarCursos, FormularioInsercao, FormularioLogin, Persistencia, RealizarLogin};
 
 $rotas = [
     "/listar-cursos" => ListarCursos::class,
@@ -10,6 +10,7 @@ $rotas = [
     "/alterar-cursos" => FormularioEdicao::class,
     "/login" => FormularioLogin::class,
     "/realiza-login" => RealizarLogin::class,
+    "/logout" => Deslogar::class,
 ];
 
 return $rotas;
