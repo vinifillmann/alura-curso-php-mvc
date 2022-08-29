@@ -26,4 +26,4 @@
             <div class="alert alert-<?= $_SESSION["tipo_mensagem"] ?>">
                 <?= $_SESSION["mensagem"] ?>
             </div>
-        <?php } ?>
+        <?php unset($_SESSION["mensagem"]); unset($_SESSION["tipo_mensagem"]); } ?>
