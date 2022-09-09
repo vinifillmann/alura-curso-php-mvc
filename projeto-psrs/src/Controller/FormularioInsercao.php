@@ -7,7 +7,6 @@ use Psr\Http\Message\ResponseInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
-use Alura\Cursos\Controller\InterfaceController;
 
 class FormularioInsercao implements RequestHandlerInterface
 {
@@ -20,6 +19,8 @@ class FormularioInsercao implements RequestHandlerInterface
 
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
+        $get = $request->getQueryParams();
+        $post = $request->getParsedBody();
         $html = "Teste";
         return new Response(200, [], $html);
     }

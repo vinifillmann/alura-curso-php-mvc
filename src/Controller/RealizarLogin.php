@@ -5,28 +5,31 @@ namespace Alura\Cursos\Controller;
 use Alura\Cursos\Entity\Usuario;
 use Alura\Cursos\Helper\FlashMessageTrait;
 use Alura\Cursos\Infra\EntityManagerCreator;
+use Doctrine\ORM\EntityManagerInterface;
+use Nyholm\Psr7\Response;
+use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Server\RequestHandlerInterface;
 
-class RealizarLogin implements InterfaceController
+class RealizarLogin implements RequestHandlerInterface
 {
 
     use FlashMessageTrait;
 
     private $repositorioDeUsuarios;
 
-    public function __construct()
+    public function __construct(EntityManagerInterface $entityManager)
     {
-        $entityManager = (new EntityManagerCreator())->getEntityManager();
         $this->repositorioDeUsuarios = $entityManager->getRepository(Usuario::class);
     }
 
-    public function processaRequisicao(): void
+    public function handle(ServerRequestInterface $request): ResponseInterface
     {
         $email = filter_input(INPUT_POST, "email", FILTER_VALIDATE_EMAIL);
         
         if ($email === NULL || $email === false) {
             $this->defineMensagem("danger", "O E-mail digitado não é um E-mail válido");
-            header("Location: /login");
-            return;
+            return new Response(302, ["Location" => "/login"]);
         }
 
         $senha = filter_input(INPUT_POST, "senha", FILTER_SANITIZE_STRING);
@@ -35,12 +38,11 @@ class RealizarLogin implements InterfaceController
 
         if (!$usuario || !$usuario->senhaEstaCorreta($senha)) {
             $this->defineMensagem("danger", "E-mail ou senha inválidos");
-            header("Location: /login");
-            return;
+            return new Response(302, ["Location" => "/login"]);
         }
         
         $_SESSION["logado"] = true;
 
-        header("Location: /listar-cursos");
+        return new Response(302, ["Location" => "/listar-cursos"]);
     }
 }

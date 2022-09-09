@@ -1,5 +1,8 @@
 <?php
 
+use Nyholm\Psr7\Factory\Psr17Factory;
+use Nyholm\Psr7Server\ServerRequestCreator;
+
 require __DIR__ . '/../vendor/autoload.php';
 
 $caminho = isset($_SERVER["PATH_INFO"]) ? $_SERVER["PATH_INFO"] : "";
@@ -22,6 +25,27 @@ if (!isset($_SESSION["logado"]) && $eRotaDeLogin === false) {
     die();
 }
 
+$psr17Factory = new Psr17Factory();
+
+$creatorRequest = new ServerRequestCreator(
+    $psr17Factory,
+    $psr17Factory,
+    $psr17Factory,
+    $psr17Factory
+
+);
+
+$request = $creatorRequest->fromGlobals();
+
 $classeControladora = $rotas[$caminho];
-$contolador = new $classeControladora();
-$contolador->processaRequisicao();
+$container = require __DIR__ . "/../config/dependencies.php";
+$contolador = $container->get($classeControladora);
+$resposta = $contolador->handle($request);
+
+foreach ($resposta->getHeaders() as $name => $values) {
+    foreach ($values as $value) {
+        header("{$name}: {$value}", false);
+    }
+}
+
+echo $resposta->getBody();
