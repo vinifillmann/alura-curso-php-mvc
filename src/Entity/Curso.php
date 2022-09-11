@@ -3,9 +3,10 @@
 namespace Alura\Cursos\Entity;
 
 use Doctrine\ORM\Mapping\{Entity, Table, Column, Id, GeneratedValue};
+use JsonSerializable;
 
 #[Entity, Table("cursos")]
-class Curso
+class Curso implements JsonSerializable
 {
     #[Id, GeneratedValue, Column(type: "integer")]
     private $id;
@@ -30,5 +31,13 @@ class Curso
     public function setDescricao(string $descricao): void
     {
         $this->descricao = $descricao;
+    }
+    
+    public function jsonSerialize(): mixed
+    {
+        return [
+            "id" => $this->id,
+            "descricao" => $this->descricao
+        ];
     }
 }
